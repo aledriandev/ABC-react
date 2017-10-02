@@ -22,6 +22,8 @@ class ABCquiz extends React.Component {
             choices: this.questions[0].choices,
             count: 1,
             answers: [],
+            complete: false,
+            solution: false
             // correctAnswers : []
         };
         // console.log(allQuestions);
@@ -78,6 +80,7 @@ class ABCquiz extends React.Component {
             question: '',
             choices: [],
             count: 0,
+            complete: true,
             answers: this.answers,
             // correctAnswers: this.correctAnswers
         });
@@ -106,24 +109,22 @@ class ABCquiz extends React.Component {
         return this.state.answers.map((answer,index)=>{
             if( answer == 0){
                 return <p class='correct'>
-                            <b>{this.questions[index].question}: </b>{this.questions[index].choices[parseInt(answer)]}
+                            {this.questions[index].question}: <b>{this.questions[index].choices[parseInt(answer)]}</b>
                         </p>;
             }else{
                 return <p class='incorrect'>
-                            <del><b>{this.questions[index].question}: </b>{this.questions[index].choices[parseInt(answer)]}</del>
-                            {this.questions[index].choices[0]}
+                            <del>{this.questions[index].question}: {this.questions[index].choices[parseInt(answer)]}</del>
+                            <b>{this.questions[index].choices[0]}</b>
                         </p>;
             }
         });
     }
 
     showSolution () {
-        return (
-            <div>
-                <h3>Solution</h3>
-                {this.solution()}
-            </div>
-        );
+        this.setState ({
+            solution: true,
+            complete: false
+        });
     }
 
     render() {
@@ -138,8 +139,11 @@ class ABCquiz extends React.Component {
                  
                     <div className="bg-white text-center" id="game">
                         {this.showQuestions()}
-                        {this.showAnswers()}
-                        {this.showSolution()}
+                        {this.state.complete&&this.showAnswers()}
+                        {this.state.solution&&<div>
+                            <h3>Solution</h3>
+                            {this.solution()}
+                        </div>}
                         <div className="social">
                             <div className='circle'><img src="img/fb.png" alt=""/></div>
                             <div className='circle'><img src="img/tw.png" alt=""/></div>
