@@ -134,6 +134,19 @@ class ABCquiz extends React.Component {
         })
     }
 
+    again () {
+        console.log('click ');
+        this.answers = [];
+        this.setState ({
+            question: this.questions[0].question,
+            choices: this.questions[0].choices,
+            count: 1,
+            answers: [],
+            complete: false,
+            solution: false
+        });
+    }
+
     render() {
         // this.cambioEstado(0);
         return (
@@ -150,6 +163,7 @@ class ABCquiz extends React.Component {
                         {this.state.solution&&<div>
                             <h3>Solution</h3>
                             {this.solution()}
+                            <button onClick={(e)=>{this.again(e)}}>Again</button>
                         </div>}
                         <div className="social">
                             <div className='circle'><img src="img/fb.png" alt=""/></div>
