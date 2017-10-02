@@ -16,7 +16,6 @@ class ABCquiz extends React.Component {
         super(props);
         this.answers = [];
         this.questions = props.questions;
-        // this.correctAnswers = [];
         this.state = {
             question: this.questions[0].question,
             choices: this.questions[0].choices,
@@ -24,11 +23,9 @@ class ABCquiz extends React.Component {
             answers: [],
             complete: false,
             solution: false
-            // correctAnswers : []
         };
-        // console.log(allQuestions);
     }
-    cambioEstado (index) {
+    changeState (index) {
         this.setState({
             question: this.questions[index].question,
             choices: this.questions[index].choices,
@@ -36,12 +33,17 @@ class ABCquiz extends React.Component {
         });
     }
 
+    showImagen () {
+        const vehicles = ['img/1.svg','img/2.svg','img/3.svg','img/4.svg','img/5.svg','img/6.svg'];
+        return <img src={vehicles[this.state.count-1]} alt=""/>
+    }
+
     showChoices () { 
         const letters = ['img/a.gif' ,'img/b.gif' ,'img/c.gif' ];
         return this.state.choices.map((choice,index)=>{
             console.log(this.answers);
-            return (<div key={index} className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-                        <button key={index} id={index} className='btn-question' onClick={(e)=>this.counter(e,index)}>
+            return (<div key={'a'+index} className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+                        <button className='btn-question' onClick={(e)=>this.counter(e,index)}>
                             <img className='letter' src={letters[index]} alt=""/>
                             <p>{choice}</p>
                             <div className='div-check'></div>
@@ -65,24 +67,23 @@ class ABCquiz extends React.Component {
     counter (e,index) {
         let count = this.state.count;
         if (count<5) {
-            this.cambioEstado(count);
+            this.changeState(count);
             this.answers.push(index);
             console.log(this.questions);
         }else if (count ==5){
             this.answers.push(index);
             console.log(this.answers);
-            this.cambioEstadoRespuesta();
+            this.changeStateComplete();
         }
     }
 
-    cambioEstadoRespuesta () {
+    changeStateComplete () {
         this.setState({
             question: '',
             choices: [],
-            count: 0,
+            count: 6,
             complete: true,
             answers: this.answers,
-            // correctAnswers: this.correctAnswers
         });
     }
 
@@ -108,11 +109,11 @@ class ABCquiz extends React.Component {
     solution () {
         return this.state.answers.map((answer,index)=>{
             if( answer == 0){
-                return <p class='correct'>
+                return <p class='correct' key={index}>
                             {this.questions[index].question}: <b>{this.questions[index].choices[parseInt(answer)]}</b>
                         </p>;
             }else{
-                return <p class='incorrect'>
+                return <p class='incorrect' key={index}>
                             <del>{this.questions[index].question}: {this.questions[index].choices[parseInt(answer)]}</del>
                             <b>{this.questions[index].choices[0]}</b>
                         </p>;
@@ -127,17 +128,23 @@ class ABCquiz extends React.Component {
         });
     }
 
+    prev () {
+        this.setState({
+            count: this.state.count-1,
+        })
+    }
+
     render() {
         // this.cambioEstado(0);
         return (
             <section className="container">
-                <div id="abc-game" className="text-center abc-game">
-                    <div><img id="prev" src="img/left.svg" alt=""/></div>
-                    <div><img id="next" src="img/right.svg" alt=""/></div>
-                    <img id='vehicle' src="img/1.svg" alt=""/>
-                    <p id="textProgress" className='text-left'>0 of 5 answered</p>
+                <div className="text-center abc-game">
+                    <div><img src="img/left.svg" onClick={()=>{this.prev()}} alt=""/></div>
+                    <div><img src="img/right.svg" alt=""/></div>
+                    <div>{this.showImagen()}</div>
+                    <p className='text-left'>{this.state.count-1} of 5 answered</p>
                  
-                    <div className="bg-white text-center" id="game">
+                    <div className="bg-white text-center game">
                         {this.showQuestions()}
                         {this.state.complete&&this.showAnswers()}
                         {this.state.solution&&<div>
@@ -151,8 +158,8 @@ class ABCquiz extends React.Component {
                         </div>
                     </div>
                 
-                    <div className="bg-white text-center" id="result"></div>
-                    <div className="bg-white text-center" id="again"></div>
+                    <div className="bg-white text-center result"></div>
+                    <div className="bg-white text-center again"></div>
                 </div>
             </section>
         );
