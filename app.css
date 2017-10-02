@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #FAE4D8;
+    background-color: #FAE4D8 !important;
     font-family: 'Lato';
 }
 
@@ -38,12 +38,14 @@ h4 {
     font-weight: bold;
     margin:5px 0;
     position: relative;
-    background-color: #DCDCE7;
+    background-color: #EFEFFD;
     color: #323269;
+    border-radius: 5px;
+    border: 3px solid #323269;
 }
 
 .btn-question:hover{
-    background-color: #8C8CAD;
+    background-color: #C5C5EE;
 }
 
 .btn-question .select{
