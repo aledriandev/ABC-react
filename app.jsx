@@ -15,12 +15,14 @@ class ABCquiz extends React.Component {
     constructor(props) {
         super(props);
         this.answers = [];
+        this.answersCorrect = [];
         this.questions = props.questions;
         this.state = {
             question: this.questions[0].question,
             choices: this.questions[0].choices,
             count: 1,
             answers: [],
+            answersCorrect: [],
             complete: false,
             solution: false,
             init: true
@@ -76,6 +78,9 @@ class ABCquiz extends React.Component {
             console.log(this.answers);
             this.changeStateComplete();
         }
+        if (index == 0) {
+            this.answersCorrect.push(index);
+        }
     }
 
     changeStateComplete () {
@@ -83,6 +88,7 @@ class ABCquiz extends React.Component {
             init: false,
             complete: true,
             answers: this.answers,
+            answersCorrect: this.answersCorrect
         });
     }
 
@@ -100,7 +106,7 @@ class ABCquiz extends React.Component {
             <div>
                 <h3>Here are you answers:</h3>
                 {this.answersUser()}
-                <button onClick={e=>this.showSolution(e)}>Submit</button>
+                <button className='btn-quiz' onClick={e=>this.showSolution(e)}>Submit</button>
             </div>
         );
     }
@@ -137,11 +143,13 @@ class ABCquiz extends React.Component {
     again () {
         console.log('click ');
         this.answers = [];
+        this.answersCorrect = [];
         this.setState ({
             question: this.questions[0].question,
             choices: this.questions[0].choices,
             count: 1,
             answers: [],
+            answersCorrect: [],
             complete: false,
             solution: false,
             init: true
@@ -162,9 +170,10 @@ class ABCquiz extends React.Component {
                         {this.state.init&&this.showQuestions()}
                         {this.state.complete&&this.showAnswers()}
                         {this.state.solution&&<div>
-                            <h3>Solution</h3>
+                            <h3>Respuestas correctas</h3>
+                            <h4>{this.state.answersCorrect.length} de 5</h4>
                             {this.solution()}
-                            <button onClick={(e)=>{this.again(e)}}>Again</button>
+                            <button className='btn-quiz' onClick={(e)=>{this.again(e)}}>Again</button>
                         </div>}
                         <div className="social">
                             <div className='circle'><img src="img/fb.png" alt=""/></div>
