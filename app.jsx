@@ -16,10 +16,13 @@ class ABCquiz extends React.Component {
         super(props);
         this.answers = [];
         this.questions = props.questions;
+        this.correctAnswers = [];
         this.state = {
             question: this.questions[0].question,
             choices: this.questions[0].choices,
-            count: 1
+            count: 1,
+            answers: [],
+            correctAnswers : []
         };
         // console.log(allQuestions);
     }
@@ -30,29 +33,13 @@ class ABCquiz extends React.Component {
             count: this.state.count +1
         });
     }
-    counter (e) {
-        let count = this.state.count;
-        if (count<5) {
-            this.cambioEstado(count);
-            this.answers.push();
-        }else{
-            this.cambioEstadoRespuesta();
-        }
-    }
-
-    cambioEstadoRespuesta () {
-        this.setState({
-            question: '',
-            choices: [],
-            count: 0
-        });
-    }
 
     showChoices () { 
         const letters = ['img/a.gif' ,'img/b.gif' ,'img/c.gif' ];
         return this.state.choices.map((choice,index)=>{
+            console.log(this.answers);
             return (<div key={index} className='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-                        <button className='btn-question' onClick={(e)=>this.counter(e)}>
+                        <button key={index} id={index} className='btn-question' onClick={(e)=>this.counter(e,index)}>
                             <img className='letter' src={letters[index]} alt=""/>
                             <p>{choice}</p>
                             <div className='div-check'></div>
@@ -72,6 +59,47 @@ class ABCquiz extends React.Component {
             </div>
         );
     }
+    
+    counter (e,index) {
+        let count = this.state.count;
+        if (count<5) {
+            this.cambioEstado(count);
+            this.answers.push(index);
+            console.log(this.questions);
+        }else if (count ==5){
+            this.answers.push(index);
+            console.log(this.answers);
+            this.cambioEstadoRespuesta();
+        }
+    }
+
+    cambioEstadoRespuesta () {
+        this.setState({
+            question: '',
+            choices: [],
+            count: 0,
+            answers: this.answers
+        });
+    }
+
+    answersUser () {
+        return this.state.answers.map((answer,index)=>{
+            return (
+                <div key={index}>
+                    <p><b>{this.questions[index].question}: </b>{this.questions[index].choices[parseInt(answer)]}</p>
+                </div>
+            );
+        });
+    }
+    showAnswers () {
+        return (
+            <div>
+                <h3>Here are you answers:</h3>
+                {this.answersUser()}
+                <button>Submit</button>
+            </div>
+        );
+    }
 
     render() {
         // this.cambioEstado(0);
@@ -85,6 +113,7 @@ class ABCquiz extends React.Component {
                  
                     <div className="bg-white text-center" id="game">
                         {this.showQuestions()}
+                        {this.showAnswers()}
                         <div className="social">
                             <div className='circle'><img src="img/fb.png" alt=""/></div>
                             <div className='circle'><img src="img/tw.png" alt=""/></div>
