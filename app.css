@@ -20,7 +20,7 @@ h4 {
     width: 40px;
 }
 
-#choices{
+.choices{
     padding: 50px;
     position: relative;
     /* display: flex;
@@ -108,40 +108,22 @@ h4 {
     padding-bottom: 20px;
 }
 
-#social{
+.social{
     display: flex;
     justify-content: space-around;
     padding: 0 200px;
+    height: 30px;
 }
 
-.circle{
-    color:white;
-    border-radius: 50%;
+.circle img{
     opacity: 0.6;
+    width: 50px;
 }
 
-.circle:hover{
+.circle img:hover{
     opacity: 1;
 }
 
-.circle i.fa-twitter{
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #20ccdf;
-}
-
-.circle i.fa-facebook{
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #331DAD;
-}
-
-.circle .fa-google-plus{
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #DA4141;
-}
-
-#abc-game>img{
+.abc-game>img{
     width: 20%;
 }
