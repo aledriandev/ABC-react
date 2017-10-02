@@ -22,7 +22,8 @@ class ABCquiz extends React.Component {
             count: 1,
             answers: [],
             complete: false,
-            solution: false
+            solution: false,
+            init: true
         };
     }
     changeState (index) {
@@ -56,7 +57,7 @@ class ABCquiz extends React.Component {
     showQuestions () {
         return (
             <div>
-                <h4>{this.state.question}</h4>
+                <h3>{this.state.question}</h3>
                 <div className="row text-center choices">
                     {this.showChoices()}
                 </div>
@@ -79,9 +80,7 @@ class ABCquiz extends React.Component {
 
     changeStateComplete () {
         this.setState({
-            question: '',
-            choices: [],
-            count: 6,
+            init: false,
             complete: true,
             answers: this.answers,
         });
@@ -109,11 +108,11 @@ class ABCquiz extends React.Component {
     solution () {
         return this.state.answers.map((answer,index)=>{
             if( answer == 0){
-                return <p class='correct' key={index}>
+                return <p className='correct' key={index}>
                             {this.questions[index].question}: <b>{this.questions[index].choices[parseInt(answer)]}</b>
                         </p>;
             }else{
-                return <p class='incorrect' key={index}>
+                return <p className='incorrect' key={index}>
                             <del>{this.questions[index].question}: {this.questions[index].choices[parseInt(answer)]}</del>
                             <b>{this.questions[index].choices[0]}</b>
                         </p>;
@@ -144,7 +143,8 @@ class ABCquiz extends React.Component {
             count: 1,
             answers: [],
             complete: false,
-            solution: false
+            solution: false,
+            init: true
         });
     }
 
@@ -159,7 +159,7 @@ class ABCquiz extends React.Component {
                     <p className='text-left'>{this.state.count-1} of 5 answered</p>
                  
                     <div className="bg-white text-center game">
-                        {this.showQuestions()}
+                        {this.state.init&&this.showQuestions()}
                         {this.state.complete&&this.showAnswers()}
                         {this.state.solution&&<div>
                             <h3>Solution</h3>
