@@ -127,3 +127,7 @@ h4 {
 .abc-game>img{
     width: 20%;
 }
+
+.btn-direction{
+    width: 40px;
+}

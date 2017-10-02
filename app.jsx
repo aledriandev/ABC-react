@@ -153,8 +153,8 @@ class ABCquiz extends React.Component {
         return (
             <section className="container">
                 <div className="text-center abc-game">
-                    <div><img src="img/left.svg" onClick={()=>{this.prev()}} alt=""/></div>
-                    <div><img src="img/right.svg" alt=""/></div>
+                    <div  className='text-left'><img className='btn-direction' src="img/right.svg" alt=""/></div>
+                    <div  className='text-left'><img className='btn-direction' src="img/left.svg" onClick={()=>{this.prev()}} alt=""/></div>
                     <div>{this.showImagen()}</div>
                     <p className='text-left'>{this.state.count-1} of 5 answered</p>
                  
