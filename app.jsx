@@ -57,7 +57,7 @@ class ABCquiz extends React.Component {
         return (
             <div>
                 <h4>{this.state.question}</h4>
-                <div id="choices" className="row text-center choices">
+                <div className="row text-center choices">
                     {this.showChoices()}
                 </div>
             </div>
@@ -132,6 +132,7 @@ class ABCquiz extends React.Component {
         this.setState({
             count: this.state.count-1,
         })
+        this.answers.pop();
     }
 
     again () {
